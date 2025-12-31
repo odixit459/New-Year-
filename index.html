@@ -11,7 +11,8 @@
         
         .bg-img { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: url('bg.jpg') no-repeat center center/cover; 
+            /* MATCHES YOUR GITHUB FILENAME EXACTLY */
+            background: url('bg.JPEG') no-repeat center center/cover; 
             z-index: -1; filter: brightness(0.4); 
         }
 
@@ -25,13 +26,11 @@
             width: 85%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
         }
 
-        h2 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; margin-bottom: 15px; color: #ffccd5; line-height: 1.2; }
-        p { line-height: 1.6; font-size: 1rem; font-weight: 300; margin-bottom: 25px; padding: 0 10px; text-align: center; }
+        h2 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; margin-bottom: 15px; color: #ffccd5; }
+        p { line-height: 1.6; font-size: 1rem; font-weight: 300; margin-bottom: 25px; padding: 0 10px; }
         
         .btn-red { background: linear-gradient(to right, #e63946, #d62828); color: white; border: none; padding: 12px 40px; border-radius: 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-        .btn-red:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(230, 57, 70, 0.4); }
 
-        /* Marquee Gallery */
         .marquee-container { width: 100%; display: flex; flex-direction: column; gap: 15px; overflow: hidden; padding: 10px 0; }
         .marquee-row { display: flex; width: 100%; overflow: hidden; }
         .track { display: flex; gap: 15px; animation: slideLeft 40s linear infinite; }
@@ -41,12 +40,9 @@
         @keyframes slideLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         @keyframes slideRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 
-        /* Fullscreen Modal */
         #photoModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; cursor: zoom-out; }
-        #modalImg { max-width: 90%; max-height: 80%; border-radius: 10px; box-shadow: 0 0 40px rgba(0,0,0,1); animation: zoomIn 0.3s ease-out; }
+        #modalImg { max-width: 90%; max-height: 80%; border-radius: 10px; animation: zoomIn 0.3s ease-out; }
         @keyframes zoomIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-        .wish-display { margin-top: 15px; font-style: italic; color: #ffccd5; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -56,7 +52,7 @@
     <div class="page active" id="page1">
         <div class="glass-card">
             <h2>Om talks to and loves one person more than anyone else… <br>can you guess who? ❤️🤫</h2>
-            <input type="text" id="ans" style="width:80%; padding:12px; border-radius:15px; border:none; margin-bottom:20px; text-align:center; font-size:1.1rem;" placeholder="Type her name...">
+            <input type="text" id="ans" style="width:80%; padding:12px; border-radius:15px; border:none; margin-bottom:20px; text-align:center;" placeholder="Type her name...">
             <br>
             <button class="btn-red" onclick="checkPuzzle()">Enter</button>
         </div>
@@ -70,7 +66,7 @@
         </div>
     </div>
 
-    <div class="page" id="page3" style="background: rgba(0,0,0,0.8);">
+    <div class="page" id="page3" style="background: rgba(0,0,0,0.85);">
         <h2 style="margin-bottom: 10px;">Our Infinite Memories ❤️</h2>
         <div class="marquee-container">
             <div class="marquee-row"><div class="track" id="row1"></div></div>
@@ -83,10 +79,10 @@
     <div class="page" id="page4">
         <div class="glass-card">
             <h2>Close your eyes and make a wish... 🥂</h2>
-            <textarea id="wishInput" rows="3" style="width:85%; padding:12px; border-radius:15px; border:none; margin-bottom:20px; text-align:center; font-family: inherit;" placeholder="Write your heart's wish..."></textarea>
+            <textarea id="wishInput" rows="3" style="width:85%; padding:12px; border-radius:15px; border:none; margin-bottom:20px; text-align:center;" placeholder="Write your heart's wish..."></textarea>
             <br>
             <button class="btn-red" onclick="saveWish()">Save Forever</button>
-            <div id="savedWish" class="wish-display"></div>
+            <div id="savedWish" style="margin-top:10px; font-style:italic; color:#ffccd5;"></div>
         </div>
     </div>
 
@@ -95,7 +91,6 @@
     </div>
 
     <script>
-        // Array of 18 images
         const images = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
 
         function shuffle(array) {
@@ -103,9 +98,8 @@
         }
 
         function checkPuzzle() {
-            const val = document.getElementById('ans').value.toLowerCase().trim();
-            if(val === "aarti") showPage('page2');
-            else alert("Hint: It's the person Om loves most! (Aarti)");
+            if(document.getElementById('ans').value.toLowerCase().trim() === "aarti") showPage('page2');
+            else alert("Hint: Aarti!");
         }
 
         function showPage(id) {
@@ -116,17 +110,18 @@
 
         function loadGallery() {
             const r1 = document.getElementById('row1'), r2 = document.getElementById('row2'), r3 = document.getElementById('row3');
-            if(r1.innerHTML !== "") return; // Don't reload if already there
+            if(r1.innerHTML !== "") return;
 
             const shuffled = shuffle([...images]);
             
             const fillRow = (row, set) => {
                 let html = "";
                 set.forEach(num => {
-                    let src = num + ".jpg";
-                    html += `<img src="${src}" onclick="openModal('${src}')" onerror="this.style.display='none'">`;
+                    // This will try .JPEG first (your current format)
+                    let src = num + ".JPEG"; 
+                    html += `<img src="${src}" onclick="openModal('${src}')" onerror="this.src='${num}.jpg'">`;
                 });
-                row.innerHTML = html + html; // Duplicate for smooth loop
+                row.innerHTML = html + html;
             };
 
             fillRow(r1, shuffled.slice(0, 6));
@@ -134,31 +129,20 @@
             fillRow(r3, shuffled.slice(12, 18));
         }
 
-        let modalTimer;
         function openModal(src) {
             const modal = document.getElementById('photoModal');
             document.getElementById('modalImg').src = src;
             modal.style.display = 'flex';
-            clearTimeout(modalTimer);
-            modalTimer = setTimeout(closeModal, 5000); // Auto close after 5s
         }
 
-        function closeModal() {
-            document.getElementById('photoModal').style.display = 'none';
-        }
+        function closeModal() { document.getElementById('photoModal').style.display = 'none'; }
 
         function saveWish() {
             const wish = document.getElementById('wishInput').value;
-            if(!wish) return;
-            localStorage.setItem('aarti_new_year_wish', wish);
-            document.getElementById('savedWish').innerText = "Last Saved Wish: " + wish;
-            alert("Your wish is locked in! ❤️");
+            localStorage.setItem('aarti_wish', wish);
+            document.getElementById('savedWish').innerText = "Last Saved: " + wish;
+            alert("Saved! ❤️");
         }
-
-        window.onload = () => {
-            const saved = localStorage.getItem('aarti_new_year_wish');
-            if(saved) document.getElementById('savedWish').innerText = "Last Saved Wish: " + saved;
-        };
     </script>
 </body>
 </html>
