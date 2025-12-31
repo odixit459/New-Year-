@@ -11,7 +11,8 @@
         
         .bg-img { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: url('https://lh3.googleusercontent.com/d/17PDptm_5A9Blp0Gdcx3t8uO1BU-RkDdc') no-repeat center center/cover; 
+            /* UPDATED TO USE YOUR GITHUB IMAGE bg.jpg */
+            background: url('bg.jpg') no-repeat center center/cover; 
             z-index: -1; filter: brightness(0.45); 
         }
 
@@ -26,25 +27,22 @@
         }
 
         h2 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; margin-bottom: 15px; color: #ffccd5; }
-        p { line-height: 1.8; font-size: 1.05rem; font-weight: 300; margin-bottom: 25px; }
+        p { line-height: 1.8; font-size: 1.05rem; font-weight: 300; margin-bottom: 25px; padding: 0 10px; }
         
         input, textarea { width: 85%; padding: 12px; border-radius: 15px; border: none; margin-bottom: 20px; text-align: center; outline: none; font-size: 1rem; background: rgba(255,255,255,0.9); color: #333; }
         .btn-red { background: linear-gradient(to right, #e63946, #d62828); color: white; border: none; padding: 12px 40px; border-radius: 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
         .btn-red:hover { transform: scale(1.05); background: #ff4d6d; }
 
-        /* Gallery Slider */
         .marquee-container { width: 100%; display: flex; flex-direction: column; gap: 15px; overflow: hidden; padding: 20px 0; }
         .marquee-row { display: flex; width: 100%; overflow: hidden; }
         .track { display: flex; gap: 15px; animation: slideLeft 30s linear infinite; }
         .reverse .track { animation: slideRight 30s linear infinite; }
-        .marquee-row:hover .track { animation-play-state: paused; }
         .track img { width: 220px; height: 300px; object-fit: cover; border-radius: 15px; border: 2px solid rgba(255,255,255,0.3); transition: 0.4s; cursor: zoom-in; }
 
         @keyframes slideLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         @keyframes slideRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 
-        /* MODAL FOR POP-OUT IMAGE */
-        #photoModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; cursor: zoom-out; animation: fadeIn 0.3s; }
+        #photoModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; cursor: zoom-out; }
         #modalImg { max-width: 90%; max-height: 85%; border-radius: 15px; box-shadow: 0 0 30px rgba(255, 77, 109, 0.5); animation: zoomIn 0.4s forwards; }
         @keyframes zoomIn { from { transform: scale(0.8); } to { transform: scale(1); } }
 
@@ -121,7 +119,8 @@
             const fillRow = (row, start) => {
                 let html = "";
                 for(let i=0; i<6; i++) {
-                    let url = `https://lh3.googleusercontent.com/d/${photoIds[start+i]}`;
+                    // FIXED DRIVE LINK STRUCTURE
+                    let url = `https://lh3.googleusercontent.com/u/0/d/${photoIds[start+i]}`;
                     html += `<img src="${url}" onclick="openModal('${url}')">`;
                 }
                 row.innerHTML = html + html; 
