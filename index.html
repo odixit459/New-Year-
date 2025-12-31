@@ -2,79 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Aarti ❤️</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;600&display=swap');
 
-        /* FORCE THE BACKGROUND TO BE VISIBLE ALWAYS */
-        :root {
-            --bg-url: url('./bg.jpg?v=99');
-        }
-
-        body, html { 
-            margin: 0; padding: 0; height: 100%; width: 100%; 
-            font-family: 'Poppins', sans-serif; 
-            color: white; overflow: hidden;
-            background-color: #000; /* Fallback if image fails */
-        }
+        /* FIX: Removed solid black background from body */
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; font-family: 'Poppins', sans-serif; color: white; overflow: hidden; }
         
         .bg-img { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: var(--bg-url) no-repeat center center; 
-            background-size: cover;
-            z-index: -1; filter: brightness(0.45);
-            display: block !important;
+            background: url('bg.jpg') no-repeat center center/cover; 
+            z-index: -1; filter: brightness(0.5); /* Adjust brightness to make text readable */
         }
 
-        .page { 
-            display: none; height: 100vh; width: 100vw; 
-            flex-direction: column; justify-content: center; align-items: center; 
-            text-align: center; position: absolute; top: 0; left: 0; 
-            background: transparent !important; /* Ensure no black screen covers bg */
-        }
-        .active { display: flex; animation: fadeIn 0.8s ease-in-out; }
+        /* FIX: Removed solid background from pages so bg.jpg is visible */
+        .page { display: none; height: 100vh; width: 100vw; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: absolute; top: 0; left: 0; background: transparent; }
+        .active { display: flex; animation: fadeIn 1s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .glass-card { 
             background: rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2); 
-            padding: 25px; border-radius: 25px; 
-            width: 85%; max-width: 450px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            box-sizing: border-box;
+            padding: 30px; border-radius: 25px; 
+            width: 85%; max-width: 500px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
         }
 
-        h2 { font-family: 'Dancing Script', cursive; font-size: 2.1rem; margin-bottom: 15px; color: #ffccd5; }
-        p { line-height: 1.7; font-size: 1rem; font-weight: 300; margin-bottom: 20px; padding: 0 10px; }
+        h2 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; margin-bottom: 15px; color: #ffccd5; }
+        p { line-height: 1.8; font-size: 1.05rem; font-weight: 300; margin-bottom: 25px; padding: 0 10px; }
         
-        input, textarea { 
-            width: 90%; padding: 12px; border-radius: 15px; border: none; 
-            margin-bottom: 20px; text-align: center; font-size: 1rem; 
-            background: rgba(255, 255, 255, 0.9); color: #333; outline: none;
-        }
-        
-        .btn-red { 
-            background: linear-gradient(to right, #e63946, #d62828); 
-            color: white; border: none; padding: 12px 40px; 
-            border-radius: 20px; font-weight: bold; cursor: pointer; 
-            text-transform: uppercase; transition: 0.3s;
-        }
+        .btn-red { background: linear-gradient(to right, #e63946, #d62828); color: white; border: none; padding: 12px 40px; border-radius: 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .btn-red:hover { transform: scale(1.05); background: #ff4d6d; }
 
-        .marquee-container { width: 100%; display: flex; flex-direction: column; gap: 10px; overflow: hidden; padding: 10px 0; }
-        .track img { width: 140px; height: 190px; object-fit: cover; border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.2); }
-        .track { display: flex; gap: 10px; animation: slideLeft 30s linear infinite; }
+        .marquee-container { width: 100%; display: flex; flex-direction: column; gap: 15px; overflow: hidden; padding: 20px 0; }
+        .marquee-row { display: flex; width: 100%; overflow: hidden; }
+        .track { display: flex; gap: 15px; animation: slideLeft 30s linear infinite; }
         .reverse .track { animation: slideRight 30s linear infinite; }
-        
+        .track img { width: 220px; height: 300px; object-fit: cover; border-radius: 15px; border: 2px solid rgba(255,255,255,0.3); transition: 0.4s; cursor: zoom-in; }
+
         @keyframes slideLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         @keyframes slideRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 
-        #photoModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; }
-        #modalImg { max-width: 90%; max-height: 80%; border-radius: 15px; }
+        #photoModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; cursor: zoom-out; }
+        #modalImg { max-width: 90%; max-height: 85%; border-radius: 15px; box-shadow: 0 0 30px rgba(255, 77, 109, 0.5); animation: zoomIn 0.4s forwards; }
+        @keyframes zoomIn { from { transform: scale(0.8); } to { transform: scale(1); } }
     </style>
 </head>
-<body onclick="startMusic()">
+<body>
 
     <audio id="bgMusic" loop>
         <source src="music.mp3" type="audio/mpeg">
@@ -85,7 +62,7 @@
     <div class="page active" id="page1">
         <div class="glass-card">
             <h2>Om talks to and loves one person more than anyone else… <br>can you guess who? ❤️🤫</h2>
-            <input type="text" id="ans" placeholder="Type her name...">
+            <input type="text" id="ans" style="width:85%; padding:12px; border-radius:15px; border:none; margin-bottom:20px; text-align:center; font-size: 1rem; outline: none;" placeholder="Type her name...">
             <button class="btn-red" onclick="checkPuzzle()">Submit</button>
         </div>
     </div>
@@ -98,41 +75,37 @@
         </div>
     </div>
 
-    <div class="page" id="page3" style="background: rgba(0,0,0,0.4) !important;">
-        <h2 style="margin-bottom: 15px;">Our Infinite Memories ❤️</h2>
+    <div class="page" id="page3" style="background: rgba(0,0,0,0.4);">
+        <h2 style="margin-bottom: 20px;">Our Infinite Memories ❤️</h2>
         <div class="marquee-container">
             <div class="marquee-row"><div class="track" id="row1"></div></div>
             <div class="marquee-row reverse"><div class="track" id="row2"></div></div>
             <div class="marquee-row"><div class="track" id="row3"></div></div>
         </div>
-        <button class="btn-red" style="margin-top: 15px;" onclick="showPage('page4')">Make a Wish ✨</button>
+        <button class="btn-red" style="margin-top: 20px;" onclick="showPage('page4')">Make a Wish ✨</button>
     </div>
 
     <div class="page" id="page4">
         <div class="glass-card">
             <h2>Close your eyes and make a wish... 🥂</h2>
-            <textarea id="wishInput" rows="3" placeholder="Write your heart's wish..."></textarea>
+            <textarea id="wishInput" rows="3" style="width:85%; padding:12px; border-radius:15px; border:none; margin-bottom:20px; text-align:center; outline: none;" placeholder="Write your heart's wish..."></textarea>
             <button class="btn-red" onclick="saveWish()">Save Forever</button>
             <div id="savedWish" style="margin-top:20px; font-style:italic; color:#ffccd5;"></div>
         </div>
     </div>
 
-    <div id="photoModal" onclick="this.style.display='none'"><img id="modalImg" src=""></div>
+    <div id="photoModal" onclick="closeModal()">
+        <img id="modalImg" src="">
+    </div>
 
     <script>
-        const photos = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18].sort(() => Math.random() - 0.5);
-        const audio = document.getElementById('bgMusic');
-        let musicStarted = false;
+        const photoNums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18].sort(() => Math.random() - 0.5);
 
-        function startMusic() {
-            if (!musicStarted) {
-                audio.play().then(() => { musicStarted = true; }).catch(e => {});
-            }
-        }
-
+        // MODIFIED: Start music when the puzzle is solved
         function checkPuzzle() {
             if(document.getElementById('ans').value.toLowerCase().trim() === "aarti") {
-                startMusic();
+                const music = document.getElementById('bgMusic');
+                music.play().catch(e => console.log("Music playback failed: ", e));
                 showPage('page2');
             }
             else alert("Hint: It's you, Aarti!");
@@ -147,23 +120,30 @@
         function loadGallery() {
             const r1 = document.getElementById('row1'), r2 = document.getElementById('row2'), r3 = document.getElementById('row3');
             if(r1.innerHTML !== "") return;
-            const fill = (row, start) => {
-                let h = "";
+            const fillRow = (row, start) => {
+                let html = "";
                 for(let i=0; i<6; i++) {
-                    let s = photos[start+i] + ".jpg";
-                    h += `<img src="${s}" onclick="openModal('${s}')" onerror="this.src='${photos[start+i]}.JPEG'">`;
+                    let fileName = photoNums[start+i] + ".jpg";
+                    html += `<img src="${fileName}" onclick="openModal('${fileName}')">`;
                 }
-                row.innerHTML = h + h;
+                row.innerHTML = html + html; 
             };
-            fill(r1, 0); fill(r2, 6); fill(r3, 12);
+            fillRow(r1, 0); fillRow(r2, 6); fillRow(r3, 12);
         }
 
-        function openModal(src) { document.getElementById('modalImg').src = src; document.getElementById('photoModal').style.display = 'flex'; }
+        function openModal(src) {
+            const modal = document.getElementById('photoModal');
+            document.getElementById('modalImg').src = src;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() { document.getElementById('photoModal').style.display = 'none'; }
 
         function saveWish() {
-            const w = document.getElementById('wishInput').value;
-            localStorage.setItem('aartiWish', w);
-            document.getElementById('savedWish').innerText = "Last Saved Wish: " + w;
+            const wish = document.getElementById('wishInput').value;
+            if(!wish) return;
+            localStorage.setItem('aartiWish', wish);
+            document.getElementById('savedWish').innerText = "Last Saved Wish: " + wish;
             alert("Your wish is safe! ❤️");
         }
     </script>
