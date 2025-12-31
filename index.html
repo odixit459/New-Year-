@@ -9,14 +9,12 @@
 
         body, html { margin: 0; padding: 0; height: 100%; width: 100%; font-family: 'Poppins', sans-serif; color: white; overflow: hidden; background: #000; }
         
-        /* THE BACKGROUND */
         .bg-img { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: url('bg.jpg') no-repeat center center/cover; 
             z-index: -1; filter: brightness(0.5);
         }
 
-        /* PAGE SETUP - Added safe-area padding for mobile */
         .page { 
             display: none; height: 100vh; width: 100vw; 
             flex-direction: column; justify-content: center; align-items: center; 
@@ -26,7 +24,6 @@
         .active { display: flex; animation: fadeIn 0.8s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* ADJUSTED GLASS CARD FOR MOBILE */
         .glass-card { 
             background: rgba(255, 255, 255, 0.1); 
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
@@ -54,7 +51,6 @@
             text-transform: uppercase; font-size: 0.9rem;
         }
 
-        /* GALLERY ROWS - Adjusted for smaller height */
         .marquee-container { width: 100%; display: flex; flex-direction: column; gap: 8px; overflow: hidden; }
         .track img { width: 130px; height: 180px; object-fit: cover; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); }
         .track { display: flex; gap: 10px; animation: slideLeft 30s linear infinite; }
@@ -68,6 +64,10 @@
 </head>
 <body>
 
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
     <div class="bg-img"></div>
 
     <div class="page active" id="page1">
@@ -80,7 +80,7 @@
 
     <div class="page" id="page2">
         <div class="glass-card">
-            <h2>For My Aarti... ✨</h2>
+            <h2>For My Dearest Aarti... ✨</h2>
             <p>“Ever since you walked into my life, everything feels brighter. Happy New Year 2026, Aarti. You are admired, cherished, and loved more than you realize.” ❤️</p>
             <button class="btn-red" onclick="showPage('page3')">Memories 📸</button>
         </div>
@@ -109,9 +109,14 @@
 
     <script>
         const photos = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18].sort(() => Math.random() - 0.5);
+        const music = document.getElementById('bgMusic');
 
         function checkPuzzle() {
-            if(document.getElementById('ans').value.toLowerCase().trim() === "aarti") showPage('page2');
+            if(document.getElementById('ans').value.toLowerCase().trim() === "aarti") {
+                // MUSIC STARTS HERE ON USER INTERACTION
+                music.play().catch(e => console.log("Audio play blocked until interaction."));
+                showPage('page2');
+            }
             else alert("Hint: It's you, Aarti!");
         }
 
