@@ -7,23 +7,31 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;600&display=swap');
 
+        /* FORCE THE BACKGROUND TO BE VISIBLE ALWAYS */
+        :root {
+            --bg-url: url('./bg.jpg?v=99');
+        }
+
         body, html { 
             margin: 0; padding: 0; height: 100%; width: 100%; 
             font-family: 'Poppins', sans-serif; 
             color: white; overflow: hidden;
-            background: #000;
+            background-color: #000; /* Fallback if image fails */
         }
         
         .bg-img { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: url('bg.jpg') no-repeat center center/cover; 
+            background: var(--bg-url) no-repeat center center; 
+            background-size: cover;
             z-index: -1; filter: brightness(0.45);
+            display: block !important;
         }
 
         .page { 
             display: none; height: 100vh; width: 100vw; 
             flex-direction: column; justify-content: center; align-items: center; 
             text-align: center; position: absolute; top: 0; left: 0; 
+            background: transparent !important; /* Ensure no black screen covers bg */
         }
         .active { display: flex; animation: fadeIn 0.8s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -90,7 +98,7 @@
         </div>
     </div>
 
-    <div class="page" id="page3" style="background: rgba(0,0,0,0.5);">
+    <div class="page" id="page3" style="background: rgba(0,0,0,0.4) !important;">
         <h2 style="margin-bottom: 15px;">Our Infinite Memories ❤️</h2>
         <div class="marquee-container">
             <div class="marquee-row"><div class="track" id="row1"></div></div>
@@ -116,18 +124,15 @@
         const audio = document.getElementById('bgMusic');
         let musicStarted = false;
 
-        // Force music to start on the first touch of the screen
         function startMusic() {
             if (!musicStarted) {
-                audio.play().then(() => {
-                    musicStarted = true;
-                }).catch(e => console.log("Waiting for interaction..."));
+                audio.play().then(() => { musicStarted = true; }).catch(e => {});
             }
         }
 
         function checkPuzzle() {
             if(document.getElementById('ans').value.toLowerCase().trim() === "aarti") {
-                startMusic(); // Backup trigger
+                startMusic();
                 showPage('page2');
             }
             else alert("Hint: It's you, Aarti!");
