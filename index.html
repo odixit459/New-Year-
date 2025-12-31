@@ -7,7 +7,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;600&display=swap');
 
-        /* THIS CREATES THE BACKGROUND WITHOUT AN IMAGE */
+        /* STABLE BACKGROUND CODE */
         body, html { 
             margin: 0; padding: 0; height: 100%; width: 100%; 
             font-family: 'Poppins', sans-serif; 
@@ -15,46 +15,38 @@
             color: white; overflow: hidden; 
         }
 
-        /* Adds a subtle glowing effect to the corners */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); /* Adds a slight texture */
-            opacity: 0.1;
-            z-index: -1;
-        }
-
         .page { display: none; height: 100vh; width: 100vw; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: absolute; top: 0; left: 0; }
         .active { display: flex; animation: fadeIn 1s ease-in-out; }
-        
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .glass-card { 
             background: rgba(255, 255, 255, 0.08); 
-            backdrop-filter: blur(15px); 
-            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1); 
-            padding: 30px; border-radius: 25px; 
+            padding: 25px; border-radius: 25px; 
             width: 85%; max-width: 450px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.8); 
         }
 
         h2 { font-family: 'Dancing Script', cursive; font-size: 2rem; margin-bottom: 15px; color: #ffccd5; }
-        p { line-height: 1.6; font-size: 1rem; font-weight: 300; margin-bottom: 25px; color: #f0f0f0; }
+        p { line-height: 1.6; font-size: 0.95rem; font-weight: 300; margin-bottom: 25px; color: #f0f0f0; }
         
-        input { 
-            width: 80%; padding: 12px; border-radius: 12px; border: none; 
-            margin-bottom: 20px; text-align: center; font-size: 1rem;
-            background: rgba(255, 255, 255, 0.9); color: #222; 
-        }
+        input, textarea { width: 80%; padding: 12px; border-radius: 12px; border: none; margin-bottom: 20px; text-align: center; font-size: 1rem; background: rgba(255, 255, 255, 0.9); color: #222; outline: none; }
         
-        .btn-red { 
-            background: linear-gradient(to right, #e63946, #d62828); 
-            color: white; border: none; padding: 12px 40px; 
-            border-radius: 20px; font-weight: bold; cursor: pointer; 
-            text-transform: uppercase; 
-        }
+        .btn-red { background: linear-gradient(to right, #e63946, #d62828); color: white; border: none; padding: 12px 40px; border-radius: 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+
+        /* Gallery Styles */
+        .marquee-container { width: 100%; display: flex; flex-direction: column; gap: 10px; overflow: hidden; padding: 10px 0; }
+        .marquee-row { display: flex; width: 100%; overflow: hidden; }
+        .track { display: flex; gap: 10px; animation: slideLeft 30s linear infinite; }
+        .reverse .track { animation: slideRight 30s linear infinite; }
+        .track img { width: 150px; height: 220px; object-fit: cover; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); }
+
+        @keyframes slideLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        @keyframes slideRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+        #photoModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; }
+        #modalImg { max-width: 90%; max-height: 80%; border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -71,21 +63,80 @@
     <div class="page" id="page2">
         <div class="glass-card">
             <h2>For My Dearest Aarti... ✨</h2>
-            <p>“As this new year begins, I want you to know that my feelings for you are deep, real, and only growing stronger. Happy New Year 2026, Aarti.” ❤️</p>
-            <button class="btn-red" onclick="alert('Happy New Year!')">Our Memories 📸</button>
+            <p>“Ever since you walked into my life, my world hasn’t felt the same—in the best way. You didn’t just become a part of my days, you became the reason they feel brighter, warmer, and more alive. Every smile of yours stays with me longer than the moment itself. Happy New Year 2026, Aarti. You are admired, cherished, and loved more than you probably realize.” ❤️</p>
+            <button class="btn-red" onclick="showPage('page3')">Our Memories 📸</button>
         </div>
     </div>
 
+    <div class="page" id="page3" style="background: rgba(0,0,0,0.85);">
+        <h2 style="margin-bottom: 10px;">Our Infinite Memories ❤️</h2>
+        <div class="marquee-container">
+            <div class="marquee-row"><div class="track" id="row1"></div></div>
+            <div class="marquee-row reverse"><div class="track" id="row2"></div></div>
+        </div>
+        <button class="btn-red" style="margin-top: 15px;" onclick="showPage('page4')">Make a Wish ✨</button>
+    </div>
+
+    <div class="page" id="page4">
+        <div class="glass-card">
+            <h2>Close your eyes and make a wish... 🥂</h2>
+            <textarea id="wishInput" rows="3" placeholder="Write your heart's wish..."></textarea>
+            <br>
+            <button class="btn-red" onclick="saveWish()">Save Forever</button>
+            <div id="savedWish" style="margin-top:15px; font-style:italic; color:#ffccd5; font-size:0.9rem;"></div>
+        </div>
+    </div>
+
+    <div id="photoModal" onclick="this.style.display='none'">
+        <img id="modalImg" src="">
+    </div>
+
     <script>
+        const images = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
+
         function checkPuzzle() {
-            const val = document.getElementById('ans').value.toLowerCase().trim();
-            if(val === "aarti") {
-                document.getElementById('page1').classList.remove('active');
-                document.getElementById('page2').classList.add('active');
-            } else {
-                alert("Hint: It's the person Om loves most!");
-            }
+            if(document.getElementById('ans').value.toLowerCase().trim() === "aarti") showPage('page2');
+            else alert("Hint: It's the person Om loves most! (Aarti)");
         }
+
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            if(id === 'page3') loadGallery();
+        }
+
+        function loadGallery() {
+            const r1 = document.getElementById('row1'), r2 = document.getElementById('row2');
+            if(r1.innerHTML !== "") return;
+            const shuffled = images.sort(() => Math.random() - 0.5);
+            const fillRow = (row, set) => {
+                let html = "";
+                set.forEach(num => {
+                    let src = num + ".jpg"; // This will try .jpg
+                    html += `<img src="${src}" onclick="openModal('${src}')" onerror="this.src='${num}.JPEG'">`;
+                });
+                row.innerHTML = html + html;
+            };
+            fillRow(r1, shuffled.slice(0, 9));
+            fillRow(r2, shuffled.slice(9, 18));
+        }
+
+        function openModal(src) {
+            document.getElementById('modalImg').src = src;
+            document.getElementById('photoModal').style.display = 'flex';
+        }
+
+        function saveWish() {
+            const wish = document.getElementById('wishInput').value;
+            localStorage.setItem('aarti_wish', wish);
+            document.getElementById('savedWish').innerText = "Last Saved Wish: " + wish;
+            alert("Your wish is safe! ❤️");
+        }
+
+        window.onload = () => {
+            const saved = localStorage.getItem('aarti_wish');
+            if(saved) document.getElementById('savedWish').innerText = "Last Saved Wish: " + saved;
+        };
     </script>
 </body>
 </html>
