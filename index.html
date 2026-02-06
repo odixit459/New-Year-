@@ -147,5 +147,22 @@
             alert("Your wish is safe! ❤️");
         }
     </script>
+    <script>
+    // EXISTING CODE ABOVE...
+
+    // ADD THIS NEW BLOCK:
+    window.addEventListener('load', function() {
+        // This checks the memory of the specific browser you are using
+        const savedWish = localStorage.getItem('aartiWish');
+        
+        // If memory exists, put it back into the box
+        if(savedWish) {
+            document.getElementById('wishInput').value = savedWish;
+            document.getElementById('savedWish').innerText = "Last Saved Wish: " + savedWish;
+        }
+    });
+    </script>
+    
 </body>
 </html>
+
